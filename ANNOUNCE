@@ -1,0 +1,55 @@
+﻿Subject: [announce] Fectors for Vicare revision 0.2a0
+
+			   Fectors for Vicare
+			   ==================
+
+
+Functional  programming needs  functional data  structures.  This  is an
+implementation of "vectors" (also called  arrays), a finite map keyed by
+consecutive  integers between  0  and n-1,  n being  the  length of  the
+vector.  Being  functional, the  structure is not  observably mutatable,
+and so access to any version will always give the correct answer.
+
+
+  "Fectors for Vicare" is just a repackaging of Ian Price's Fectors with
+GNU Autotools for package infrastructure and verified support for Vicare
+Scheme.
+
+  The home page of the Vicare project is at:
+
+	       <http://marcomaggi.github.com/vicare.html>
+
+  The latest version of Fectors for Vicare Scheme can be found here:
+
+	<http://sourceforge.net/projects/vicare-fectors/files/>
+
+development takes place at:
+
+		<http://github.com/marcomaggi/fectors/>
+
+in the "vicare-scheme" branch; and as backup at:
+
+	   <http://sourceforge.net/projects/vicare-fectors/>
+
+the documentation is available online:
+
+	    <http://marcomaggi.github.com/docs/fectors.html>
+
+  The original Fectors can be found here:
+
+		    <https://github.com/ijp/fectors>
+
+
+Notes for revision 0.2a0
+------------------------
+
+* Initial release.
+
+
+### end of file
+# Local Variables:
+# mode: text
+# coding: utf-8-with-signature
+# fill-column: 72
+# paragraph-start: "*"
+# End:

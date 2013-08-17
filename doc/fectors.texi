@@ -1,0 +1,343 @@
+\input texinfo.tex
+@c %**start of header
+@setfilename fectors.info
+@settitle Fectors for Vicare Scheme
+@c %**end of header
+
+@c page
+@c ------------------------------------------------------------
+@c Macros.
+@c ------------------------------------------------------------
+
+@include version.texi
+@include macros.texi
+
+@c page
+@c ------------------------------------------------------------
+@c Values.
+@c ------------------------------------------------------------
+
+@set TITLE                      Fectors for Vicare Scheme
+
+@c To be used as @value{PACKAGE} whenever we need to include the full
+@c name of this package.
+@set PACKAGE                    FECTORS
+
+@c To be used as @value{PACKAGE} whenever we need to include the
+@c nickname of the project: the name that is used to compose the
+@c distribution tarball or the web address.
+@set PACKAGE_NICKNAME           fectors
+
+@c To be used as @value{AUTHOR} whenever we need to include the list of
+@c authors of this document.
+@set AUTHOR                     Ian Price
+
+@c To be used as @value{AUTHOR_EMAIL} whenever we need to include the
+@c email of the *single* author of this document.
+@set AUTHOR_EMAIL               @email{ianprice90@@googlemail.com}
+
+@c To be used as @value{COPYRIGHT_YEARS} whenever we need to include the
+@c list of copyright years.
+@set COPYRIGHT_YEARS            2012
+
+@c ------------------------------------------------------------
+
+@set ORIGINAL_GITHUB_URL        @url{http://github.com/ijp/@value{PACKAGE_NICKNAME}}
+@set REPACKAGED_GITHUB_URL      @url{http://github.com/marcomaggi/@value{PACKAGE_NICKNAME}}
+@set REPACKAGED_SOURCEFORGE_URL @url{http://sourceforge.net/projects/vicare-fectors/}
+
+@set REQUIRED_VICARE_VERSION    0.3d1
+
+@c page
+@c ------------------------------------------------------------
+@c Copyright notice.
+@c ------------------------------------------------------------
+
+@copying
+This document describes version @value{VERSION} of @value{PACKAGE}, an
+implementation of functional vectors written in @rnrs{6} Scheme.
+
+The package is distributed under the terms of a liberal license and can
+be downloaded from:
+
+@center @value{ORIGINAL_GITHUB_URL}
+
+@noindent
+a repackaging under the @gnu{} Autotools, with verified support for
+Vicare Scheme and providing this documentation is at:
+
+@center @value{REPACKAGED_GITHUB_URL}
+
+@noindent
+and as backup at:
+
+@center @value{REPACKAGED_SOURCEFORGE_URL}
+
+@noindent
+Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}@*
+Edited by Marco Maggi @email{marco.maggi-ipsu@@poste.it}
+
+@quotation
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+@enumerate
+@item
+Redistributions of source code must retain the above copyright notice,
+this list of conditions and the following disclaimer.
+
+@item
+Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+@item
+The name of the author may not be used to endorse or promote products
+derived from this software without specific prior written permission.
+@end enumerate
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+@end quotation
+@end copying
+
+@c page
+@c ------------------------------------------------------------
+@c Headers.
+@c ------------------------------------------------------------
+
+@titlepage
+@title @value{TITLE}
+@subtitle Revision @value{VERSION}
+@author @value{AUTHOR} @value{AUTHOR_EMAIL}
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@c ------------------------------------------------------------
+
+@ifinfo
+@dircategory Development
+@direntry
+* fectors: (fectors).           @value{TITLE}.
+@end direntry
+@end ifinfo
+
+@c ------------------------------------------------------------
+
+@ignore
+@syncodeindex tp cp
+@syncodeindex vr cp
+@syncodeindex fn cp
+@end ignore
+
+@c page
+@ifnottex
+@node Top
+@top @value{TITLE}
+
+@insertcopying
+
+@menu
+* overview::                    Overview of the package.
+* fectors::                     Functional vectors.
+
+Appendices
+
+* Package License::             Package license.
+* References::                  Bibliography and references.
+
+Indexes
+
+* concept index::               An entry for each concept.
+* function index::              An entry for each function.
+* variable index::              An entry for each variable.
+* type index::                  An entry for each type.
+@end menu
+@end ifnottex
+
+@c page
+@node overview
+@chapter Overview of the package
+
+
+This document describes version @value{VERSION} of @value{PACKAGE}, an
+implementation of functional vectors written in @rnrs{6} Scheme.
+
+Functional programming needs functional data structures.  This is an
+implementation of ``vectors'' (also called arrays), a finite map keyed
+by consecutive integers between @math{0} and @math{n-1}, @math{n} being
+the length of the vector.  Being functional, the structure is not
+observably mutatable, and so access to any version will always give the
+correct answer.
+
+There are many possible implementations of the vector interface with
+different efficiency characteristics, the one contained prioritises
+``single threaded'' use of vectors, that is, one in which access is most
+frequently to the last created version of the vector.  Access to
+previously stored versions works correctly, though it will not be quite
+as efficient.
+
+This package is just a repackaging of Ian Price's Fectors with @gnu{}
+Autotools for package infrastructure and verified support for Vicare
+Scheme.
+
+@c page
+@node fectors
+@chapter Functional vectors
+
+
+@cindex Library @library{fectors}
+@cindex @library{fectors}, library
+
+
+@defun make-fector @var{size}
+@defunx make-fector @var{size} @var{fill}
+Return a fector of the specified @var{size}, which must be a
+non--negative integer.  If the @var{fill} parameter is given, the
+locations of the fector are initialised to that object, otherwise their
+initial values are unspecified.
+@end defun
+
+
+@defun fector @var{obj} @dots{}
+Return a fector whose initial values are given as arguments.
+@end defun
+
+
+@defun fector? @var{obj}
+Return @true{} if a given object is a fector, @false{} otherwise.
+@end defun
+
+
+@defun fector-length @var{fector}
+Return a non--negative integer representing the number of items that are
+stored in @var{fector}.
+@end defun
+
+
+@defun build-fector @var{size} @var{index->obj}
+Return a new fector of the given @var{size}, a non--negative integer,
+where each item is initialised to the value of the given function
+@var{index->obj} applied to its index.
+@end defun
+
+
+@defun fector-ref @var{fector} @var{index}
+Return the item associated with the given @var{index} in @var{fector}.
+If @var{index} is outside the range:
+
+@example
+0 <= @var{index} < (fector-length @var{fector})
+@end example
+
+then an @condition{assertion} is raised.
+@end defun
+
+
+@defun fector-set @var{fector} @var{index} @var{item}
+Return a new fector equivalent to @var{fector} except the given
+@var{index} which is associated to @var{item}.  If @var{index} is
+outside the range:
+
+@example
+0 <= @var{index} < (fector-length @var{fector})
+@end example
+
+then an @condition{assertion} is raised.
+@end defun
+
+
+@defun list->fector @var{list-of-items}
+Return a fector initialised with the contents of the given list.
+@end defun
+
+
+@defun fector->list @var{fector}
+Return a list containing the items in @var{fector}.
+@end defun
+
+@c page
+@node Package License
+@appendix Package license
+
+
+Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+@enumerate
+@item
+Redistributions of source code must retain the above copyright notice,
+this list of conditions and the following disclaimer.
+
+@item
+Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.
+
+@item
+The name of the author may not be used to endorse or promote products
+derived from this software without specific prior written permission.
+@end enumerate
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+@c page
+@node References
+@appendix Bibliography and references
+
+
+@c page
+@node concept index
+@appendix An entry for each concept
+
+@printindex cp
+
+@node function index
+@appendix An entry for each function.
+
+@printindex fn
+
+@node variable index
+@appendix An entry for each variable.
+
+@printindex vr
+
+@node type index
+@appendix An entry for each type.
+
+@printindex tp
+
+@contents
+@bye
+
+@c end of file
+
