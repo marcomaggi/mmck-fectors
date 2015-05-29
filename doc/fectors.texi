@@ -330,7 +330,7 @@ The documentation of @value{PACKAGE} is available online:
 the latest version of this package for Vicare Scheme can be downloaded
 from:
 
-@center @value{DOWNLOAD_URL}
+@center @value{REPACKAGED_DOWNLOAD_URL}
 
 @noindent
 the original package is available at:
