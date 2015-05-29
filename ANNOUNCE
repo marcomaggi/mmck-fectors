@@ -1,4 +1,4 @@
-﻿Subject: [announce] Fectors for Vicare revision 0.2a0
+﻿Subject: [announce] Fectors for Vicare revision 0.4d0
 
 			   Fectors for Vicare
 			   ==================
@@ -10,18 +10,17 @@ consecutive  integers between  0  and n-1,  n being  the  length of  the
 vector.  Being  functional, the  structure is not  observably mutatable,
 and so access to any version will always give the correct answer.
 
-
   "Fectors for Vicare" is just a repackaging of Ian Price's Fectors with
 GNU Autotools for package infrastructure and verified support for Vicare
 Scheme.
 
   The home page of the Vicare project is at:
 
-	       <http://marcomaggi.github.com/vicare.html>
+	       <http://marcomaggi.github.io/vicare.html>
 
   The latest version of Fectors for Vicare Scheme can be found here:
 
-	<http://sourceforge.net/projects/vicare-fectors/files/>
+	  <https://bitbucket.org/marcomaggi/fectors/downloads>
 
 development takes place at:
 
@@ -29,15 +28,21 @@ development takes place at:
 
 in the "vicare-scheme" branch; and as backup at:
 
-	   <http://sourceforge.net/projects/vicare-fectors/>
+	      <https://bitbucket.org/marcomaggi/fectors/>
 
 the documentation is available online:
 
-	    <http://marcomaggi.github.com/docs/fectors.html>
+	    <http://marcomaggi.github.io/docs/fectors.html>
 
   The original Fectors can be found here:
 
 		    <https://github.com/ijp/fectors>
+
+
+Notes for revision 0.4d0
+------------------------
+
+* Started support for Vicare Scheme 0.4.
 
 
 Notes for revision 0.2a0

@@ -17,7 +17,7 @@ BUILT_SOURCES		=
 #page
 #### documentation
 
-dist_doc_DATA			= README.org README.vicare-scheme LICENSE
+dist_doc_DATA			= README.org README LICENSE
 AM_MAKEINFOFLAGS		= --no-split
 info_TEXINFOS			= doc/fectors.texi
 doc_fectors_TEXINFOS		= doc/macros.texi
