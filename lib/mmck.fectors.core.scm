@@ -157,22 +157,22 @@
 (define (fector . args)
   (make <fector> 'value (apply vector args)))
 
-(define (build-fector n f)
-  (make <fector> 'value (build-vector n f)))
+(define-method (build-fector (n <integer>) (fill #t))
+  (make <fector> 'value (build-vector n fill)))
 
 
-(define (fector-length fector)
+(define-method (fector-length (fector <fector>))
   (reroot! fector)
   (vector-length (fector-value fector)))
 
-(define (fector-ref fector index)
+(define-method (fector-ref (fector <fector>) (index <integer>))
   (reroot! fector)
   (let ((vector (fector-value fector)))
     (assert (and (<= 0 index)
                  (< index (vector-length vector))))
     (vector-ref vector index)))
 
-(define (fector-set fector index object)
+(define-method (fector-set (fector <fector>) (index <integer>) (object #t))
   (reroot! fector)
   (let ((v (fector-value fector)))
     (assert (and (<= 0 index)
@@ -184,7 +184,7 @@
         (fector-value-set! fector diff)
         new-fector))))
 
-(define (reroot! fector)
+(define-method (reroot! (fector <fector>))
   (define value (fector-value fector))
   (if (diff? value)
       (let* ((index (diff-index value))
@@ -198,10 +198,10 @@
         fector)
     fector))
 
-(define (list->fector l)
-  (make <fector> 'value (list->vector l)))
+(define-method (list->fector (ell <list>))
+  (make <fector> 'value (list->vector ell)))
 
-(define (fector->list fector)
+(define-method (fector->list (fector <fector>))
   (reroot! fector)
   (vector->list (fector-value fector)))
 
