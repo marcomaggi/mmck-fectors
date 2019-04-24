@@ -20,7 +20,7 @@ else THE_PLATFORM=linux
 fi
 
 function main () {
-    chicken-install coops
+    (umask 0; sudo chicken-install coops)
 }
 
 function script_error () {
