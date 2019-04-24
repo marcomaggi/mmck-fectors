@@ -140,7 +140,6 @@ env:
 #
 
 install:
-  - ./meta/travis-ci/install-pkg-config.sh;
   - ./meta/travis-ci/install-autoconf.sh;
   - ./meta/travis-ci/install-automake.sh;
   - ./meta/travis-ci/install-texinfo.sh;
@@ -154,7 +153,6 @@ install:
 before_script:
   # On Linux the GNU  Libtool preparation script is called "libtoolize", while on  OS X it is called
   # "glibtoolize".
-  - echo pkg-config --version ; pkg-config --version;
   - echo autoconf --version ; autoconf --version;
   - echo automake --version ; automake --version;
   - sh ./autogen.sh;
