@@ -1,4 +1,4 @@
-# MMCK CHICKEN Fectors
+# MMCK Fectors
 
 [![Build Status](https://travis-ci.org/marcomaggi/mmck-fectors.svg?branch=master)](https://travis-ci.org/marcomaggi/mmck-fectors)
 
