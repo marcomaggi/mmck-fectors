@@ -346,6 +346,13 @@ Return a fector initialised with the contents of the given list.
 Return a list containing the items in @var{fector}.
 @end defun
 
+
+@defun fector=? @vari{obj} @varii{obj}
+@defunx fector=? @vari{obj} @varii{obj} @var{item=}
+Compare two fectors item by item: return @true{} if they are equal, otherwise return @false{}.  For
+the comparison use the function @var{item=}, which defaults to @func{eqv?}.
+@end defun
+
 @c page
 @node Package License
 @appendix Package License

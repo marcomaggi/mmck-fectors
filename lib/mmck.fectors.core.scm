@@ -96,7 +96,8 @@
      fector-ref
      fector-set
      list->fector
-     fector->list)
+     fector->list
+     fector=?)
   (import (scheme)
 	  (only (chicken base)
 		unless
@@ -198,12 +199,38 @@
         fector)
     fector))
 
+
+;;;; conversion
+
 (define-method (list->fector (ell <list>))
   (make <fector> 'value (list->vector ell)))
 
 (define-method (fector->list (fector <fector>))
   (reroot! fector)
   (vector->list (fector-value fector)))
+
+
+;;;; comparison
+
+(define fector=?
+  (case-lambda
+   ((obj1 obj2)
+    (fector=?-2 obj1 obj2))
+   ((obj1 obj2 item=)
+    (fector=?-3 obj1 obj2 item=))))
+
+(define-method (fector=?-2 (obj1 <fector>) (obj2 <fector>))
+  (fector=?-3 obj1 obj2 eqv?))
+
+(define-method (fector=?-3 (obj1 <fector>) (obj2 <fector>) (item= <procedure>))
+  (or (eq? obj1 obj2)
+      (let ((len1 (fector-length obj1)))
+	(and (= len1 (fector-length obj2))
+	     (let loop ((i 0))
+	       (or (= i len1)
+		   (and (item= (fector-ref obj1 i)
+			       (fector-ref obj2 i))
+			(loop (+ 1 i)))))))))
 
 
 ;;;; done

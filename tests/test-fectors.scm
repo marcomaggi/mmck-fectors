@@ -55,25 +55,6 @@
 (check-display "*** testing fectors\n")
 
 
-;;;; helpers
-
-(define fector=?
-  (case-lambda
-   ((obj1 obj2)
-    (fector=? obj1 obj2 eqv?))
-   ((obj1 obj2 item=)
-    (and (fector? obj1)
-	 (fector? obj2)
-	 (or (eq? obj1 obj2)
-	     (let ((len1 (fector-length obj1)))
-	       (and (= len1 (fector-length obj2))
-		    (let loop ((i 0))
-		      (or (= i len1)
-			  (and (item= (fector-ref obj1 i)
-				      (fector-ref obj2 i))
-			       (loop (+ 1 i))))))))))))
-
-
 ;;;; building fectors
 
 (check
