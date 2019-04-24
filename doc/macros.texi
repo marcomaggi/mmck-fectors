@@ -1,22 +1,10 @@
-@c macros
-
-@ignore
-
-Copyright (c) 2008-2011 Marco Maggi <marco.maggi-ipsu@poste.it>
-
-Permission is  granted to copy,  distribute and/or modify  this document
-under the  terms of the GNU  Free Documentation License,  Version 1.3 or
-any later  version published  by the Free  Software Foundation;  with no
-Invariant Sections  being ``GNU  Free Documentation License''  and ``GNU
-General  Public License'',  no  Front--Cover Texts,  and no  Back--Cover
-Texts.  A copy of the license  is included in the distribution.
-
-@end ignore
-
-@c page
 @c ------------------------------------------------------------
-@c Licensing macros.
+@c Macros.
 @c ------------------------------------------------------------
+
+@macro version{}
+@value{VERSION}
+@end macro
 
 @macro gnu{}
 @acronym{GNU}
@@ -26,9 +14,14 @@ Texts.  A copy of the license  is included in the distribution.
 @acronym{GPL}
 @end macro
 
+@macro lgpl{}
+@acronym{LGPL}
+@end macro
+
 @macro fdl{}
 @acronym{FDL}
 @end macro
+
 
 @c page
 @c ------------------------------------------------------------
@@ -41,6 +34,339 @@ Texts.  A copy of the license  is included in the distribution.
 
 @macro fixme{TEXT}
 @strong{FIXME: \TEXT\}
+@end macro
+
+@c page
+@c ------------------------------------------------------------
+@c Miscellaneous acronyms.
+@c ------------------------------------------------------------
+
+@c *** KEEP ALPHABETIC ORDER ***
+
+@macro acpi{}
+@acronym{ACPI}
+@end macro
+
+@macro alsa{}
+@acronym{ALSA}
+@end macro
+
+@macro adsl{}
+@acronym{ADSL}
+@end macro
+
+@macro ansi{}
+@acronym{ANSI}
+@end macro
+
+@macro api{}
+@acronym{API}
+@end macro
+
+@macro ascii{}
+@acronym{ASCII}
+@end macro
+
+@macro asciiz{}
+@acronym{ASCIIZ}
+@end macro
+
+@c Remember that @url is already used by Texinfo.
+@macro aurl{}
+@acronym{URL}
+@end macro
+
+@c Remember that @xml is already used by Texinfo.
+@macro axml{}
+@acronym{XML}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro cdrom{}
+@acronym{CDROM}
+@end macro
+
+@macro cli{}
+@acronym{CLI}
+@end macro
+
+@macro cpu{}
+@acronym{CPU}
+@end macro
+
+@macro csv{}
+@acronym{CSV}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro dhcp{}
+@acronym{DHCP}
+@end macro
+
+@macro dns{}
+@acronym{DNS}
+@end macro
+
+@macro dtd{}
+@acronym{DTD}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro eof{}
+@acronym{EOF}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro ffi{}
+@acronym{FFI}
+@end macro
+
+@macro fifo{}
+@acronym{FIFO}
+@end macro
+
+@macro ftp{}
+@acronym{FTP}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro git{}
+@acronym{GIT}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro http{}
+@acronym{HTTP}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro ieee{}
+@acronym{IEEE}
+@end macro
+
+@macro imap{}
+@acronym{IMAP}
+@end macro
+
+@macro ip{}
+@acronym{IP}
+@end macro
+
+@macro iso{}
+@acronym{ISO}
+@end macro
+
+@macro isp{}
+@acronym{ISP}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro mime{}
+@acronym{MIME}
+@end macro
+
+@macro mpeg{}
+@acronym{MPEG}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro oob{}
+@acronym{OOB}
+@end macro
+
+@macro os{}
+@acronym{OS}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro posix{}
+@acronym{POSIX}
+@end macro
+
+@macro ppp{}
+@acronym{PPP}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro rfc{}
+@acronym{RFC}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro sftp{}
+@acronym{SFTP}
+@end macro
+
+@macro smtp{}
+@acronym{SMTP}
+@end macro
+
+@macro snmp{}
+@acronym{SNMP}
+@end macro
+
+@macro sql{}
+@acronym{SQL}
+@end macro
+
+@macro ssh{}
+@acronym{SSH}
+@end macro
+
+@macro ssl{}
+@acronym{SSL}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro tai{}
+@acronym{TAI}
+@end macro
+
+@macro tcp{}
+@acronym{TCP}
+@end macro
+
+@macro tls{}
+@acronym{TLS}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro udp{}
+@acronym{UDP}
+@end macro
+
+@macro utf{}
+@acronym{UTF}
+@end macro
+
+@macro utc{}
+@acronym{UTC}
+@end macro
+
+@macro uri{}
+@acronym{URI}
+@end macro
+
+@macro urldate{DATE}
+(@acronym{URL} last verified \DATE\)
+@end macro
+
+@macro usb{}
+@acronym{USB}
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro vlc{}
+@acronym{VLC}
+@end macro
+
+@c ------------------------------------------------------------
+
+
+
+@c page
+@c ------------------------------------------------------------
+@c Software acronyms.
+@c ------------------------------------------------------------
+
+@macro bash{}
+@command{bash}
+@end macro
+
+@macro bub{}
+@acronym{bub}
+@end macro
+
+@macro ffmpeg{}
+@acronym{FFMPEG}
+@end macro
+
+@macro gpg{}
+@acronym{GPG}
+@end macro
+
+@macro gmp{}
+@acronym{GMP}
+@end macro
+
+@macro gcc{}
+@acronym{GCC}
+@end macro
+
+@macro cretwo{}
+@acronym{CRE2}
+@end macro
+
+@macro retwo{}
+@acronym{RE2}
+@end macro
+
+@c ------------------------------------------------------------------------
+
+@ifhtml
+@macro uid{}
+@acronym{uid}
+@end macro
+@end ifhtml
+
+@ifnothtml
+@macro uid{}
+@acronym{UID}
+@end macro
+@end ifnothtml
+
+@c ------------------------------------------------------------------------
+
+@ifhtml
+@macro gid{}
+@acronym{gid}
+@end macro
+@end ifhtml
+
+@ifnothtml
+@macro gid{}
+@acronym{GID}
+@end macro
+@end ifnothtml
+
+@c page
+@c ------------------------------------------------------------
+@c Scheme language macros.
+@c ------------------------------------------------------------
+
+@macro func{NAME}
+@code{\NAME\}
+@end macro
+
+@macro snull{}
+@code{()}
+@end macro
+
+@macro true{}
+@code{#t}
+@end macro
+
+@macro false{}
+@code{#f}
+@end macro
+
+@macro keyword{NAME}
+@code{#:\NAME\}
 @end macro
 
 @c page
@@ -77,12 +403,28 @@ Revised^6 Report on the algorithmic language Scheme
 @acronym{CLOS}
 @end macro
 
+@macro ctdname{NAME}
+@code{@aclass{\NAME\}-ctd}
+@end macro
+
+@macro actdname{NAME}
+@aclass{\NAME\}-ctd
+@end macro
+
+@macro oop{}
+@acronym{OOP}
+@end macro
+
+@macro oopp{}
+@acronym{OOPP}
+@end macro
+
 @macro library{SPEC}
 @code{(\SPEC\)}
 @end macro
 
-@macro ffi{}
-@acronym{FFI}
+@macro braces{STUFF}
+@{\STUFF\@}
 @end macro
 
 @macro class{NAME}
@@ -97,11 +439,35 @@ Revised^6 Report on the algorithmic language Scheme
 <\NAME\>
 @end macro
 
-@macro clause{NAME}
-@code{\NAME\}
+@macro iface{NAME}
+@code{<<\NAME\>>}
+@end macro
+
+@macro aiface{NAME}
+<<\NAME\>>
+@end macro
+
+@macro ciface{NAME}
+<<\NAME\>>
 @end macro
 
 @macro objtype{NAME}
+@code{\NAME\}
+@end macro
+
+@macro aobjtype{NAME}
+\NAME\
+@end macro
+
+@macro cobjtype{NAME}
+\NAME\
+@end macro
+
+@macro syntax{NAME}
+@code{\NAME\}
+@end macro
+
+@macro clause{NAME}
 @code{\NAME\}
 @end macro
 
@@ -133,189 +499,8 @@ Revised^6 Report on the algorithmic language Scheme
 @acronym{RTD}
 @end macro
 
-@c page
-@c ------------------------------------------------------------
-@c Miscellaneous acronyms.
-@c ------------------------------------------------------------
-
-@macro ansi{}
-@acronym{ANSI}
-@end macro
-
-@macro api{}
-@acronym{API}
-@end macro
-
-@c Remember that @url is already used by Texinfo.
-@macro aurl{}
-@acronym{URL}
-@end macro
-
-@macro vurl{DATE}
-(@acronym{URL} last verified \DATE\)
-@end macro
-
-@macro ascii{}
-@acronym{ASCII}
-@end macro
-
-@macro axml{}
-@acronym{XML}
-@end macro
-
-@macro cpu{}
-@acronym{CPU}
-@end macro
-
-@macro csv{}
-@acronym{CSV}
-@end macro
-
-@macro dtd{}
-@acronym{DTD}
-@end macro
-
-@macro dom{}
-@acronym{DOM}
-@end macro
-
-@macro eof{}
-@acronym{EOF}
-@end macro
-
-@macro ieee{}
-@acronym{IEEE}
-@end macro
-
-@macro iso{}
-@acronym{ISO}
-@end macro
-
-@macro json{}
-@acronym{JSON}
-@end macro
-
-@macro posix{}
-@acronym{POSIX}
-@end macro
-
-@macro rfc{}
-@acronym{RFC}
-@end macro
-
-@macro uid{}
-@acronym{UID}
-@end macro
-
-@macro uri{}
-@acronym{URI}
-@end macro
-
-@macro utf{}
-@acronym{UTF}
-@end macro
-
-@macro utc{}
-@acronym{UTC}
-@end macro
-
-@macro tai{}
-@acronym{TAI}
-@end macro
-
-@macro dst{}
-@acronym{DST}
-@end macro
-
-@macro gmt{}
-@acronym{GMT}
-@end macro
-
-@macro jdn{}
-@acronym{JDN}
-@end macro
-
-@macro mjdn{}
-@acronym{MJDN}
-@end macro
-
-@macro sax{}
-@acronym{SAX}
-@end macro
-
-@macro ssax{}
-@acronym{SSAX}
-@end macro
-
-@macro sxml{}
-@acronym{SXML}
-@end macro
-
-@c page
-@c ------------------------------------------------------------
-@c Software acronyms.
-@c ------------------------------------------------------------
-
-@macro gmp{}
-@acronym{GMP}
-@end macro
-
-@macro gcc{}
-@acronym{GCC}
-@end macro
-
-@c page
-@c ------------------------------------------------------------
-@c Network related acronyms.
-@c ------------------------------------------------------------
-
-@macro http{}
-@acronym{HTTP}
-@end macro
-
-@macro ftp{}
-@acronym{FTP}
-@end macro
-
-@macro ip{}
-@acronym{IP}
-@end macro
-
-@macro tcp{}
-@acronym{TCP}
-@end macro
-
-@macro udp{}
-@acronym{UDP}
-@end macro
-
-@macro smtp{}
-@acronym{SMTP}
-@end macro
-
-@c page
-@c ------------------------------------------------------------
-@c Scheme language macros.
-@c ------------------------------------------------------------
-
-@macro func{NAME}
-@code{\NAME\}
-@end macro
-
-@macro snull{}
-@code{()}
-@end macro
-
-@macro true{}
-@code{#t}
-@end macro
-
-@macro false{}
-@code{#f}
-@end macro
-
-@macro keyword{NAME}
-@code{#:\NAME\}
+@macro rcd{}
+@acronym{RCD}
 @end macro
 
 @c page
@@ -329,6 +514,34 @@ Revised^6 Report on the algorithmic language Scheme
 
 @macro cnull{}
 @code{NULL}
+@end macro
+
+@macro ctrue{}
+@code{true}
+@end macro
+
+@macro cfalse{}
+@code{false}
+@end macro
+
+@macro struct{}
+@code{struct}
+@end macro
+
+@macro method{NAME}
+@cfunc{\NAME\}
+@end macro
+
+@macro stdin{}
+@code{stdin}
+@end macro
+
+@macro stdout{}
+@code{stdout}
+@end macro
+
+@macro stderr{}
+@code{stderr}
 @end macro
 
 @c page
@@ -352,12 +565,24 @@ Revised^6 Report on the algorithmic language Scheme
 @ref{\NODE\,\TITLE\,\TITLE\,autoconf}
 @end macro
 
-@macro nauref{NODE, TITLE}
-@ref{\NODE\,\TITLE\,\TITLE\,nausicaa}
+@macro ccexceptionsref{NODE, TITLE}
+@ref{\NODE\,\TITLE\,\TITLE\,ccexceptions}
 @end macro
 
-@macro vicareref{NODE, TITLE}
-@ref{\NODE\,\TITLE\,\TITLE\,vicare-scheme}
+@macro ccmemoryref{NODE, TITLE}
+@ref{\NODE\,\TITLE\,\TITLE\,ccmemory}
+@end macro
+
+@macro ccstructsref{NODE, TITLE}
+@ref{\NODE\,\TITLE\,\TITLE\,ccstructs}
+@end macro
+
+@macro ccstringsref{NODE, TITLE}
+@ref{\NODE\,\TITLE\,\TITLE\,ccstrings}
+@end macro
+
+@macro manpage{NODE, TITLE}
+@ref{\NODE\,\TITLE\,\TITLE\,*manpages*}
 @end macro
 
 @c page
@@ -391,31 +616,115 @@ Revised^6 Report on the algorithmic language Scheme
 @c To be used in normal text.
 
 @macro meta{THING}
-@var{?\THING\}
+<\THING\>
 @end macro
 
 @macro metao{THING}
-@var{?\THING\0}
+<\THING\0>
 @end macro
 
 @macro metai{THING}
-@var{?\THING\1}
+<\THING\1>
 @end macro
 
 @macro metaii{THING}
-@var{?\THING\2}
+<\THING\2>
 @end macro
 
 @macro metaiii{THING}
-@var{?\THING\3}
+<\THING\3>
 @end macro
 
 @macro metan{THING}
-@var{?\THING\N}
+<\THING\N>
 @end macro
 
 @macro metani{THING}
-@var{?\THING\N+1}
+<\THING\N+1>
+@end macro
+
+@c ------------------------------------------------------------
+@c To be used inside @example environment and @samp directives.
+
+@macro cmeta{THING}
+<\THING\>
+@end macro
+
+@macro cmetao{THING}
+<\THING\0>
+@end macro
+
+@macro cmetai{THING}
+<\THING\1>
+@end macro
+
+@macro cmetaii{THING}
+<\THING\2>
+@end macro
+
+@macro cmetaiii{THING}
+<\THING\3>
+@end macro
+
+@macro cmetan{THING}
+<\THING\N>
+@end macro
+
+@macro cmetani{THING}
+<\THING\N+1>
+@end macro
+
+@c ------------------------------------------------------------
+@c To be used inside argument lists.
+
+@macro ameta{THING}
+<\THING\>
+@end macro
+
+@macro ametao{THING}
+<\THING\0>
+@end macro
+
+@macro ametai{THING}
+<\THING\1>
+@end macro
+
+@macro ametaii{THING}
+<\THING\2>
+@end macro
+
+@macro ametaiii{THING}
+<\THING\3>
+@end macro
+
+@macro ametan{THING}
+<\THING\N>
+@end macro
+
+@macro ametani{THING}
+<\THING\N+1>
+@end macro
+
+@c ------------------------------------------------------------
+
+@macro hyper{THING}
+<\THING\>
+@end macro
+
+@macro hyperi{THING}
+<\THING\1>
+@end macro
+
+@macro hyperii{THING}
+<\THING\2>
+@end macro
+
+@macro hyperiii{THING}
+<\THING\3>
+@end macro
+
+@macro hypern{THING}
+<\THING\n>
 @end macro
 
 @c ------------------------------------------------------------
@@ -444,10 +753,6 @@ Revised^6 Report on the algorithmic language Scheme
 @var{\THING\n}
 @end macro
 
-@macro varni{THING}
-@var{\THING\n+1}
-@end macro
-
 @macro vark{THING}
 @var{\THING\k}
 @end macro
@@ -456,4 +761,40 @@ Revised^6 Report on the algorithmic language Scheme
 @var{\THING\j}
 @end macro
 
-@c end of file
+@c ------------------------------------------------------------
+
+@macro void{}
+@code{#<void>}
+@end macro
+
+
+@macro eol{}
+@acronym{EOL}
+@end macro
+
+@c page
+@c ------------------------------------------------------------
+@c Vicare specific macros.
+@c ------------------------------------------------------------
+
+@macro cif{}
+@acronym{CIF}
+@end macro
+
+@macro fasl{}
+@acronym{FASL}
+@end macro
+
+@macro ikptr{}
+@code{ikptr}
+@end macro
+
+@macro pcb{}
+@acronym{PCB}
+@end macro
+
+
+@c Local Variables:
+@c mode: texinfo
+@c TeX-master: t
+@c End:

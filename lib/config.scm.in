@@ -1,0 +1,27 @@
+;; @configure_input@
+;;
+
+(module (mmck.fectors.config)
+    (MMUX_PKG_MAJOR_VERSION
+     MMUX_PKG_MINOR_VERSION
+     MMUX_PKG_PATCH_LEVEL
+     MMUX_PKG_PRERELEASE_TAG
+     MMUX_PKG_BUILD_METADATA
+     MMUX_PKG_VERSION
+     MMUX_PKG_SEMANTIC_VERSION)
+  (import (scheme))
+
+  (define MMUX_PKG_MAJOR_VERSION	@MMUX_PKG_MAJOR_VERSION@)
+  (define MMUX_PKG_MINOR_VERSION	@MMUX_PKG_MINOR_VERSION@)
+  (define MMUX_PKG_PATCH_LEVEL		@MMUX_PKG_PATCH_LEVEL@)
+  (define MMUX_PKG_PRERELEASE_TAG	"@MMUX_PKG_PRERELEASE_TAG@")
+  (define MMUX_PKG_BUILD_METADATA	"@MMUX_PKG_BUILD_METADATA@")
+  (define MMUX_PKG_VERSION		"@MMUX_PKG_VERSION@")
+  (define MMUX_PKG_SEMANTIC_VERSION	"@MMUX_PKG_SEMANTIC_VERSION@")
+
+  #| end of module |# )
+
+;;; end of file
+;; Local Varaibles:
+;; mode: scheme
+;; End:

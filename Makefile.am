@@ -1,216 +1,180 @@
 ## Process this file with automake to produce Makefile.in
 
-ACLOCAL_AMFLAGS		= -I meta/autotools
-AUTOMAKE_OPTIONS	= foreign
-EXTRA_DIST		= INSTALL configure.sh
+include meta/automake/mmck-rules.make
 
-slsdir			= $(srcdir)/lib
-fasldir			= $(builddir)/lib
-testdir			= $(srcdir)/tests
-bundledlibsdir		= $(libdir)/vicare-scheme
-scriptsdir		= $(srcdir)/meta/scripts
-
-CLEANFILES		=
-MAINTAINERCLEANFILES	=
-BUILT_SOURCES		=
-
-#page
+
 #### documentation
 
-dist_doc_DATA			= README.org README LICENSE
-AM_MAKEINFOFLAGS		= --no-split
-info_TEXINFOS			= doc/fectors.texi
-doc_fectors_TEXINFOS		= doc/macros.texi
+info_TEXINFOS		= doc/mmck-fectors.texi
+doc_mmck_fectors_TEXINFOS = \
+	doc/macros.texi			\
+	doc/fdl-1.3.texi
 
-#page
-#### libraries
+
+#### library build targets
 
-VICARE_COMPILE_SOURCE_PATH	= $(fasldir):$(slsdir)
-VICARE_COMPILE_LIBRARY_PATH	= $(fasldir):$(VICARE_LIBRARY_PATH)
-VICARE_COMPILE_LD_PATH		= $(builddir)/.libs:$(LD_LIBRARY_PATH)
-VICARE_COMPILE_DYLD_PATH	= $(builddir)/.libs:$(DYLD_LIBRARY_PATH)
+# All the source files of the extension library.
+#
+MMCK_FECTORS_MODULES		= \
+	lib/mmck.fectors.core.scm		\
+	lib/mmck.fectors.version.scm		\
+	lib/mmck.fectors.scm
 
-VICARE_COMPILE_ENV	= \
-	VICARE_SOURCE_PATH=$(VICARE_COMPILE_SOURCE_PATH);	export VICARE_SOURCE_PATH;	\
-	VICARE_LIBRARY_PATH=$(VICARE_COMPILE_LIBRARY_PATH);	export VICARE_LIBRARY_PATH;	\
-	LD_LIBRARY_PATH=$(VICARE_COMPILE_LD_PATH);		export LD_LIBRARY_PATH;		\
-	DYLD_LIBRARY_PATH=$(VICARE_COMPILE_DYLD_PATH);		export DYLD_LIBRARY_PATH;
-VICARE_COMPILE_FLAGS	= $(AX_VFLAGS) $(VFLAGS) \
-			  --library-locator compile-time --build-directory $(fasldir)
-VICARE_COMPILE_RUN	= $(VICARE_COMPILE_ENV) $(VICARE) $(VICARE_COMPILE_FLAGS)
+# All the object files that must be linked in the extension library.
+#
+MMCK_FECTORS_RUNTIME_OBJECTS	= \
+	lib/mmck.fectors.core.$(OBJEXT)	\
+	lib/mmck.fectors.version.$(OBJEXT)	\
+	lib/mmck.fectors.$(OBJEXT)
 
-FASL_PREREQUISTES	= $(lib_LTLIBRARIES) $(libvicare_fectors_la_LINK)
+# All the source files of all the modules' import libraries.
+#
+MMCK_FECTORS_IMPORT_SOURCES	= \
+	lib/mmck.fectors.core.import.scm	\
+	lib/mmck.fectors.version.import.scm	\
+	lib/mmck.fectors.import.scm
+
+# The module's import libraries needed to compile main module's object
+# file.  It does not include the main import library:
+#
+#   lib/mmck.fectors.import.$(MMCK_SOEXT)
+#
+MMCK_FECTORS_IMPORT_DEPS	= \
+	lib/mmck.fectors.core.import.$(MMCK_SOEXT)	\
+	lib/mmck.fectors.version.import.$(MMCK_SOEXT)
+
+# The import  libraries needed  to compile new  code using  the shared
+# library  "(mmck fectors)".   We need  to build  and install  all of
+# them.
+#
+MMCK_FECTORS_IMPORT_SHARED_LIBS	= \
+	lib/mmck.fectors.core.import.$(MMCK_SOEXT)	\
+	lib/mmck.fectors.version.import.$(MMCK_SOEXT)	\
+	lib/mmck.fectors.import.$(MMCK_SOEXT)
+
+# This is the "(mmck fectors)" shared library file pathname.
+#
+MMCK_FECTORS_RUNTIME_SHARED_LIBS	= lib/mmck.fectors.$(MMCK_SOEXT)
 
 ## --------------------------------------------------------------------
 
-EXTRA_DIST += \
-	lib/libraries.scm			\
-	$(scriptsdir)/build-makefile-rules.sps
+EXTRA_DIST	+= $(MMCK_FECTORS_MODULES)
 
-VICARE_BUILD_DEPS	= \
-	$(VICARE_COMPILE_RUN) \
-		--source-path $(testdir) --option print-loaded-libraries --library-locator source \
-		--r6rs-script $(scriptsdir)/build-makefile-rules.sps --
-
-.PHONY: dependencies
-
-dependencies:
-	$(VICARE_BUILD_DEPS) $(slsdir)/libraries.scm >$(slsdir)/dependencies.make
-
-# NOTE This  INCLUDE directive is  processed by Automake.   To specify
-# the  pathname  of the  include  file:  we  can use  only  predefined
-# makefile variables like "top_srcdir"; we cannot use custom variables
-# defined by this very makefile.
-include $(top_srcdir)/lib/dependencies.make
+CLEANFILES	+= \
+	$(MMCK_FECTORS_RUNTIME_SHARED_LIBS)	\
+	$(MMCK_FECTORS_RUNTIME_OBJECTS)	\
+	$(MMCK_FECTORS_IMPORT_SHARED_LIBS)	\
+	$(MMCK_FECTORS_IMPORT_SOURCES)
 
 ## --------------------------------------------------------------------
 
-.PHONY: clean-fasl
+lib/mmck.fectors.version.$(OBJEXT): lib/mmck.fectors.version.scm $(MMCK_OBJECTS_DEPS)
+	$(MMCK_LIB_ENV) $(CSC_COMPILE_OBJECT_SHARED) $(@) $(<) -prologue lib/config.scm
+	@$(MV) mmck.fectors.version.import.scm lib/mmck.fectors.version.import.scm
 
-clean-fasl:
-	find $(fasldir)        -name \*.fasl -execdir rm -v '{}' ';'
-	find $(builddir)/tests -name \*.fasl -execdir rm -v '{}' ';'
+lib/mmck.fectors.version.import.scm: lib/mmck.fectors.version.$(OBJEXT)
 
-#page
-#### running the test suite: test files selection
+lib/mmck.fectors.version.import.$(MMCK_SOEXT): lib/mmck.fectors.version.import.scm
+	$(MMCK_LIB_ENV) $(CSC_COMPILE_LIBRARY) $(@) $(<)
 
-VICARE_FECTORS_PLAIN_TESTS		= \
-	tests/test-vicare-fectors.sps
+## --------------------------------------------------------------------
 
-TESTS	= $(VICARE_FECTORS_PLAIN_TESTS)
+lib/mmck.fectors.core.$(OBJEXT): lib/mmck.fectors.core.scm $(MMCK_OBJECTS_DEPS)
+	$(MMCK_LIB_ENV) $(CSC_COMPILE_OBJECT_SHARED) $(@) $(<)
+	@$(MV) mmck.fectors.core.import.scm lib/mmck.fectors.core.import.scm
 
-EXTRA_DIST += \
-	$(VICARE_FECTORS_PLAIN_TESTS)
+lib/mmck.fectors.core.import.scm: lib/mmck.fectors.core.$(OBJEXT)
 
-VICARE_SELECTED_TESTS		= $(testdir)/test-*$(file)*.sps
-VICARE_SELECTED_DEMOS		= $(testdir)/demo-*$(file)*.sps
+lib/mmck.fectors.core.import.$(MMCK_SOEXT): lib/mmck.fectors.core.import.scm
+	$(MMCK_LIB_ENV) $(CSC_COMPILE_LIBRARY) $(@) $(<)
 
-#page
+## --------------------------------------------------------------------
+
+# This is the main compilation unit and it defines the main module; it
+# depends upon all the import libraries of the other modules.
+#
+lib/mmck.fectors.$(OBJEXT): lib/mmck.fectors.scm $(MMCK_FECTORS_IMPORT_DEPS) $(MMCK_OBJECTS_DEPS)
+	$(MMCK_LIB_ENV) $(CSC_COMPILE_OBJECT_SHARED) $(@) $(<)
+	@$(MV) mmck.fectors.import.scm lib/mmck.fectors.import.scm
+
+lib/mmck.fectors.import.scm: lib/mmck.fectors.$(OBJEXT)
+
+lib/mmck.fectors.import.$(MMCK_SOEXT): lib/mmck.fectors.import.scm
+	$(MMCK_LIB_ENV) $(CSC_COMPILE_LIBRARY) $(@) $(<)
+
+## --------------------------------------------------------------------
+
+lib/mmck.fectors.$(MMCK_SOEXT): $(MMCK_FECTORS_RUNTIME_OBJECTS)
+	$(MMCK_LIB_ENV) $(CSC_LINK_LIBRARY) $(@) $(^)
+
+
+#### shared libraries installation
+
+# All the import shared libraries that we want to installe.
+#
+MMCK_ALL_IMPORT_SHARED_LIBS	= \
+	$(MMCK_FECTORS_IMPORT_SHARED_LIBS)
+
+# All the runtime shared libraries that we want to install.
+#
+MMCK_ALL_RUNTIME_SHARED_LIBS	= \
+	$(MMCK_FECTORS_RUNTIME_SHARED_LIBS)
+
+# These variables are parsed by GNU Automake to build the main library
+# targets and install them under the directory $(MMUX_CHICKEN_LIBDIR).
+#
+# We are shamelessly cheating by  installing them using GNU Automake's
+# primary  suffix  "_SCRIPTS"; these  are  not  scripts!  Scripts  are
+# installed with the permissions 0755, which, for some reason, is what
+# we want  for shared libraries.
+#
+# We  could use  the  primary suffix  "_DATA", but  we  would get  the
+# permissions 0644.
+#
+sharedlibdir		= $(MMUX_CHICKEN_LIBDIR)
+sharedlib_SCRIPTS	= $(MMCK_ALL_RUNTIME_SHARED_LIBS) $(MMCK_ALL_IMPORT_SHARED_LIBS)
+
+
 #### interface to "make check"
 #
 # Read "Parallel Test Harness" in the documentation of GNU Automake to
 # understand how to use this interface for "make check".
 #
 
-VICARE_CHECK_LIBRARY_PATH	= $(fasldir):$(VICARE_LIBRARY_PATH)
-VICARE_CHECK_SOURCE_PATH	= $(testdir):$(slsdir):$(fasldir)
-VICARE_CHECK_LD_PATH		= $(builddir)/.libs:$(LD_LIBRARY_PATH)
-VICARE_CHECK_DYLD_PATH		= $(builddir)/.libs:$(DYLD_LIBRARY_PATH)
+EXTRA_DIST		+= \
+	tests/test-version.scm		\
+	tests/test-fectors.scm
 
-VICARE_CHECK_FLAGS		= $(AX_VFLAGS) $(VFLAGS) --r6rs-script
-VICARE_CHECK_ENV		= \
-	VICARE_CHECK_QUIET=yes;					export VICARE_CHECK_QUIET;	\
-	VICARE_SOURCE_PATH=$(VICARE_CHECK_SOURCE_PATH);		export VICARE_SOURCE_PATH;	\
-	VICARE_LIBRARY_PATH=$(VICARE_CHECK_LIBRARY_PATH);	export VICARE_LIBRARY_PATH;	\
-	CHECK_TEST_NAME=$(name);				export CHECK_TEST_NAME;		\
-	VICARE_SRC_DIR=$(srcdir)/tests;				export VICARE_SRC_DIR;		\
-	VICARE_BUILDDIR=$(builddir);				export VICARE_BUILDDIR;		\
-	LD_LIBRARY_PATH=$(VICARE_CHECK_LD_PATH);		export LD_LIBRARY_PATH;		\
-	DYLD_LIBRARY_PATH=$(VICARE_CHECK_DYLD_PATH);		export DYLD_LIBRARY_PATH;
+MMCK_CHECK_OBJECTS	= \
+	tests/test-version.$(OBJEXT)	\
+	tests/test-fectors.$(OBJEXT)
 
-# We must make sure that this ends with a semicolon!!!
-AM_TESTS_ENVIRONMENT	= $(VICARE_CHECK_ENV)
-TEST_EXTENSIONS		= .sps
-SPS_LOG_COMPILER	= $(VICARE)
-AM_SPS_LOG_FLAGS	= $(VICARE_CHECK_FLAGS)
+MMCK_CHECK_PROGS	= \
+	tests/test-version.exe		\
+	tests/test-fectors.exe
 
-#page
-#### interface to "make instcheck"
+CLEANFILES	+= $(MMCK_CHECK_PROGS) $(MMCK_CHECK_OBJECTS)
 
-VICARE_INSTCHECK_LIBRARY_PATH	= $(DESTDIR)$(bundledlibsdir):$(VICARE_LIBRARY_PATH)
-VICARE_INSTCHECK_SOURCE_PATH	= $(DESTDIR)$(bundledlibsdir):$(VICARE_SOURCE_PATH):$(testdir)
-VICARE_INSTCHECK_LD_PATH	= $(DESTDIR)$(libdir)
-VICARE_INSTCHECK_DYLD_PATH	= $(DESTDIR)$(libdir)
-
-VICARE_INSTCHECK_FLAGS	= --option print-loaded-libraries $(AX_VFLAGS) $(VFLAGS)
-VICARE_INSTCHECK_ENV	= \
-	VICARE_LIBRARY_PATH=$(VICARE_INSTCHECK_LIBRARY_PATH);	export VICARE_LIBRARY_PATH;	\
-	VICARE_SOURCE_PATH=$(VICARE_INSTCHECK_SOURCE_PATH);	export VICARE_SOURCE_PATH;	\
-	LD_LIBRARY_PATH=$(VICARE_INSTCHECK_LD_PATH);		export LD_LIBRARY_PATH;		\
-	DYLD_LIBRARY_PATH=$(VICARE_INSTCHECK_DYLD_PATH);	export DYLD_LIBRARY_PATH;	\
-	VICARE_SRC_DIR=$(srcdir)/tests;				export VICARE_SRC_DIR;		\
-	VICARE_CHECK_QUIET=no;					export VICARE_CHECK_QUIET;
-VICARE_INSTCHECK_RUN	= \
-	$(VICARE_INSTCHECK_ENV) $(VICARE) $(VICARE_INSTCHECK_FLAGS)
-
-installcheck-local:
-	@for f in $(TESTS); do $(VICARE_INSTCHECK_RUN) $(srcdir)/$$f; done
-
-#page
-#### running the test suite: customised test rules
-
-VICARE_TEST_SELECTED_TESTS		= $(testdir)/test-*$(file)*.sps
-VICARE_TEST_SELECTED_DEMOS		= $(testdir)/demo-*$(file)*.sps
-
-VICARE_TEST_LIBRARY_PATH		= $(fasldir):$(VICARE_LIBRARY_PATH)
-VICARE_TEST_SOURCE_PATH			= $(testdir):$(slsdir):$(fasldir)
-VICARE_TEST_LD_PATH			= $(builddir)/.libs:$(LD_LIBRARY_PATH)
-VICARE_TEST_DYLD_PATH			= $(builddir)/.libs:$(DYLD_LIBRARY_PATH)
-
-# Enable timing  of test files  execution.  We cannot include  this in
-# the separator because it needs  to be placed between the environment
-# variables and the actual command line.
-if WANT_TIME_TESTS
-VICARE_TIME_TESTS	= $(TIME_PROGRAM) -p
+if MMCK_TESTING_ENABLED
+TESTS		= $(MMCK_CHECK_PROGS)
 endif
 
-VICARE_TEST_FLAGS	= $(AX_VFLAGS) $(VFLAGS) --r6rs-script
-VICARE_TEST_ENV		= \
-	VICARE_SOURCE_PATH=$(VICARE_TEST_SOURCE_PATH);		export VICARE_SOURCE_PATH;	\
-	VICARE_LIBRARY_PATH=$(VICARE_TEST_LIBRARY_PATH);	export VICARE_LIBRARY_PATH;	\
-	CHECK_TEST_NAME=$(name);				export CHECK_TEST_NAME;		\
-	VICARE_SRC_DIR=$(srcdir)/tests;				export VICARE_SRC_DIR;		\
-	VICARE_BUILDDIR=$(builddir);				export VICARE_BUILDDIR;		\
-	LD_LIBRARY_PATH=$(VICARE_TEST_LD_PATH);			export LD_LIBRARY_PATH;		\
-	DYLD_LIBRARY_PATH=$(VICARE_TEST_DYLD_PATH);		export DYLD_LIBRARY_PATH;
-VICARE_TEST_RUN		= $(VICARE_TEST_ENV) $(VICARE_TIME_TESTS) $(GDB) $(VICARE) $(VICARE_TEST_FLAGS)
+MMCK_CHECK_DEPS	+= $(MMCK_ALL_RUNTIME_SHARED_LIBS) $(MMCK_ALL_IMPORT_LIBS)
 
 ## --------------------------------------------------------------------
 
-.PHONY: test tests
-.PHONY: demo demos
+tests/test-version.$(OBJEXT): tests/test-version.scm $(MMCK_CHECK_DEPS)
+	$(MMCK_CHECK_ENV) $(CSC_COMPILE_OBJECT_STATIC) $(@) $(<)
 
-test tests:
-	@echo
-	@for f in $(VICARE_TEST_SELECTED_TESTS); do $(VICARE_TEST_RUN) $$f; done
-	@echo
+tests/test-version.exe: tests/test-version.$(OBJEXT)
+	$(MMCK_CHECK_ENV) $(CSC_LINK_PROGRAM) $(@) $(<)
 
-demo demos:
-	@echo
-	@for f in $(VICARE_TEST_SELECTED_DEMOS); do $(VICARE_TEST_RUN) $$f; done
-	@echo
+## --------------------------------------------------------------------
 
-#page
-#### running vicare on the terminal from the build directory
+tests/test-fectors.$(OBJEXT): tests/test-fectors.scm $(MMCK_CHECK_DEPS)
+	$(MMCK_CHECK_ENV) $(CSC_COMPILE_OBJECT_STATIC) $(@) $(<)
 
-RLWRAP_TRAMPOLINE	= $(scriptsdir)/rlwrap-trampoline
-EXTRA_DIST		+= $(RLWRAP_TRAMPOLINE)
-
-VICARE_TERMINAL_LIBRARY_PATH	= $(fasldir):$(VICARE_LIBRARY_PATH)
-VICARE_TERMINAL_SOURCE_PATH	= $(slsdir)
-VICARE_TERMINAL_LD_PATH		= $(builddir)/.libs:$(LD_LIBRARY_PATH)
-VICARE_TERMINAL_DYLD_PATH	= $(builddir)/.libs:$(DYLD_LIBRARY_PATH)
-
-VICARE_TERMINAL_RUN_FLAGS	= $(AX_VFLAGS) $(VFLAGS)
-VICARE_TERMINAL_RUN_ENV		= \
-	VICARE_LIBRARY_PATH=$(VICARE_TERMINAL_LIBRARY_PATH);	export VICARE_LIBRARY_PATH;	\
-	VICARE_SOURCE_PATH=$(VICARE_TERMINAL_SOURCE_PATH);	export VICARE_SOURCE_PATH;	\
-	VICARE_SRC_DIR=$(srcdir);				export VICARE_SRC_DIR;		\
-	VICARE_BUILDDIR=$(builddir);				export VICARE_BUILDDIR;		\
-	LD_LIBRARY_PATH=$(VICARE_TERMINAL_LD_PATH);		export LD_LIBRARY_PATH;		\
-	DYLD_LIBRARY_PATH=$(VICARE_TERMINAL_DYLD_PATH);		export DYLD_LIBRARY_PATH;
-VICARE_TERMINAL_RUN	= $(VICARE_TERMINAL_RUN_ENV) $(VICARE) $(VICARE_TERMINAL_RUN_FLAGS)
-
-VICARE_TERMINAL_VIE_FLAGS	=  --raw-repl $(VICARE_TERMINAL_RUN_FLAGS)
-VICARE_TERMINAL_VIE_ENV	= $(VICARE_TERMINAL_RUN_ENV)
-VICARE_TERMINAL_VIE	= $(VICARE_TERMINAL_VIE_ENV) $(RLWRAP_TRAMPOLINE) $(VICARE) $(VICARE_TERMINAL_VIE_FLAGS)
-
-.PHONY: test-run test-vie
-
-test-run:
-	$(VICARE_TERMINAL_RUN)
-
-test-vie:
-	$(VICARE_TERMINAL_VIE)
+tests/test-fectors.exe: tests/test-fectors.$(OBJEXT)
+	$(MMCK_CHECK_ENV) $(CSC_LINK_PROGRAM) $(@) $(<)
 
 ### end of file

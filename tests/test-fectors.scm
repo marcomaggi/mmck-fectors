@@ -1,22 +1,58 @@
-;;; test-vicare.sps --- Functional Vectors: tests with Vicare Scheme
+;;; -*- coding: utf-8-unix  -*-
+;;;
+;;;Part of: MMCK Fectors
+;;;Contents: test program for fectors
+;;;Date: Apr  2, 2019
+;;;
+;;;Abstract
+;;;
+;;;	This program is a test of fectors' features.
+;;;
+;;;Copyright (C) 2012, 2019 Marco Maggi <marco.maggi-ipsu@poste.it>
+;;;Copyright (C) 2012 Ian Price <ianprice90@googlemail.com>
+;;;All rights reserved.
+;;;
+;;;Redistribution and use  in source and binary forms, with  or without modification,
+;;;are permitted provided that the following conditions are met:
+;;;
+;;;1. Redistributions  of source code  must retain  the above copyright  notice, this
+;;;   list of conditions and the following disclaimer.
+;;;
+;;;2. Redistributions in binary form must  reproduce the above copyright notice, this
+;;;   list of  conditions and  the following disclaimer  in the  documentation and/or
+;;;   other materials provided with the distribution.
+;;;
+;;;3. The name of  the author may not be used to endorse  or promote products derived
+;;;   from this software without specific prior written permission.
+;;;
+;;;THIS SOFTWARE  IS PROVIDED  BY THE  AUTHOR ``AS  IS'' AND  ANY EXPRESS  OR IMPLIED
+;;;WARRANTIES,   INCLUDING,  BUT   NOT  LIMITED   TO,  THE   IMPLIED  WARRANTIES   OF
+;;;MERCHANTABILITY AND FITNESS FOR A PARTICULAR  PURPOSE ARE DISCLAIMED.  IN NO EVENT
+;;;SHALL  THE  AUTHOR  BE  LIABLE  FOR ANY  DIRECT,  INDIRECT,  INCIDENTAL,  SPECIAL,
+;;;EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;;;SUBSTITUTE  GOODS  OR  SERVICES;  LOSS  OF USE,  DATA,  OR  PROFITS;  OR  BUSINESS
+;;;INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY, WHETHER IN CONTRACT,
+;;;STRICT LIABILITY, OR  TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING  IN ANY WAY
+;;;OUT  OF THE  USE OF  THIS SOFTWARE,  EVEN IF  ADVISED OF  THE POSSIBILITY  OF SUCH
+;;;DAMAGE.
+;;;
 
-;; Copyright (C) 2012 Marco Maggi <marco.maggi-ipsu@poste.it>
-;; Copyright (C) 2012 Ian Price <ianprice90@googlemail.com>
+
+;;;; units and module header
 
-;; Author: Marco Maggi <marco.maggi-ipsu@poste.it>
+(require-library (mmck fectors))
+(require-library (mmck checks))
 
-;; This program is free software, you can redistribute it and/or
-;; modify it under the terms of the new-style BSD license.
-
-;; You should have received a copy of the BSD license along with this
-;; program. If not, see <http://www.debian.org/misc/bsd.license>.
-
-#!r6rs
-(import (rnrs)
-  (fectors)
-  (vicare checks))
+(module (test-fectors)
+    ()
+  (import (scheme)
+	  (only (chicken base)
+		case-lambda)
+	  (mmck fectors)
+	  (mmck checks))
 
 (check-set-mode! 'report-failed)
+(check-display "*** testing fectors\n")
 
 
 ;;;; helpers
@@ -165,5 +201,7 @@
 ;;;; done
 
 (check-report)
+
+#| end of module |# )
 
 ;;; end of file

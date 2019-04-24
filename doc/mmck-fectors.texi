@@ -1,0 +1,458 @@
+\input texinfo.tex
+@c %**start of header
+@setfilename mmck-fectors.info
+@settitle @sc{mmck} Fectors
+@c %**end of header
+
+@include version.texi
+@include macros.texi
+
+@c page
+@c ------------------------------------------------------------
+@c Values.
+@c ------------------------------------------------------------
+
+@set TITLE                      Fectors for @sc{chicken}
+
+@c To be used as @value{PACKAGE} whenever we need to include the full
+@c name of this package.
+@set PACKAGE                    @sc{mmck} Fectors
+
+@c To be used as @value{PACKAGE} whenever we need to include the
+@c nickname of the project: the name that is used to compose the
+@c distribution tarball or the web address.
+@set PACKAGE_NICKNAME           mmck-fectors
+
+@c To be used as @value{AUTHOR} whenever we need to include the list of
+@c authors of this document.
+@set AUTHOR                     Marco Maggi
+
+@c To be used as @value{AUTHOR_EMAIL} whenever we need to include the
+@c email of the *single* author of this document.
+@set AUTHOR_EMAIL               @email{marco.maggi-ipsu@@poste.it}
+
+@c To be used as @value{COPYRIGHT_YEARS} whenever we need to include the
+@c list of copyright years.
+@set COPYRIGHT_YEARS            2012, 2019
+
+@set CHICKEN_VERSION            5.0.0
+
+@c ------------------------------------------------------------
+
+@set PackageStem                fectors
+
+@set PackageAutoconfPrefix      MMCK_FECTORS
+@set PackagePkgconfigModule     mmck-fectors
+
+@set GithubUrl                  @url{https://github.com/marcomaggi/@value{PACKAGE_NICKNAME}}
+@set BitbucketUrl               @url{https://bitbucket.org/marcomaggi/@value{PACKAGE_NICKNAME}}
+@set DownloadUrl                @url{https://bitbucket.org/marcomaggi/@value{PACKAGE_NICKNAME}/downloads}
+@set DocumentationUrl           @url{https://marcomaggi.github.io/docs/@value{PACKAGE_NICKNAME}.html}
+
+@c page
+@c ------------------------------------------------------------
+@c Local macros.
+@c ------------------------------------------------------------
+
+@macro mmck{}
+@sc{mmck}
+@end macro
+
+@macro chicken{}
+@sc{chicken}
+@end macro
+
+@c page
+@c ------------------------------------------------------------
+@c Copyright notice.
+@c ------------------------------------------------------------
+
+@copying
+This document describes version @value{VERSION} of @value{PACKAGE}, a @chicken{} language library
+implementing functional vectors.  @chicken{} is a Scheme--to--C compiler supporting the language
+features as defined in the ``Revised^5 Report on Scheme''.
+
+The library supports @posix{} platforms.  This package has been tested with @chicken{} version
+@value{CHICKEN_VERSION}.
+
+This package is distributed under the terms of the @gnu{} Lesser General Public License (@lgpl{}).
+
+The latest release can be downloaded from:
+
+@center @value{DownloadUrl}
+
+@noindent
+development takes place at:
+
+@center @value{GithubUrl}
+
+@noindent
+and as backup at:
+
+@center @value{BitbucketUrl}
+
+@noindent
+Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}
+Copyright @copyright{} 2012 Ian Price @email{ianprice90@@googlemail.com}
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document under the terms of the @gnu{}
+Free Documentation License, Version 1.3 or any later version published by the Free Software
+Foundation; with Invariant Sections being ``@gnu{} Free Documentation License'' and ``@gnu{} Lesser
+General Public License'', no Front--Cover Texts, and no Back--Cover Texts.  A copy of the license is
+included in the section entitled ``@gnu{} Free Documentation License''.
+@end quotation
+@end copying
+
+@c page
+@c ------------------------------------------------------------
+@c Headers.
+@c ------------------------------------------------------------
+
+@titlepage
+@title @value{TITLE}
+@subtitle Revision @value{VERSION}
+@author @value{AUTHOR} @value{AUTHOR_EMAIL}
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@c ------------------------------------------------------------
+
+@ifinfo
+@dircategory Development
+@direntry
+* mmck-fectors: (mmck-fectors).   Functional vectors for @chicken{}.
+@end direntry
+@end ifinfo
+
+@c ------------------------------------------------------------
+
+@ignore
+@syncodeindex tp cp
+@syncodeindex vr cp
+@syncodeindex fn cp
+@end ignore
+
+@c page
+@ifnottex
+@node Top
+@top @value{TITLE}
+
+@insertcopying
+
+@menu
+* overview::                    Overview of the package.
+* version::                     Version functions.
+* fectors::                     Functional vectors.
+
+Appendices
+
+* Package License::             Package License.
+* Documentation License::       GNU Free Documentation License.
+* references::                  Bibliography and references.
+
+Indexes
+
+* concept index::               An entry for each concept.
+* function index::              An entry for each function.
+* variable index::              An entry for each variable.
+* type index::                  An entry for each type.
+@end menu
+@end ifnottex
+
+@c page
+@node overview
+@chapter Overview of the package
+
+
+@cindex @library{mmck fectors}, library
+@cindex Library @library{mmck fectors}
+
+
+This document describes version @value{VERSION} of @value{PACKAGE}, a @chicken{} language library
+implementing a functional vectors.  @chicken{} is a Scheme-to-C compiler supporting the language
+features as defined in the ``Revised^5 Report on Scheme''.
+
+This package supports @posix{} platforms.  The code depends on the extension @code{coops}.  To run
+the tests: this package depends upon the package @mmck{} Checks.
+
+Functional programming needs functional data structures.  This is an implementation of ``vectors''
+(also called arrays), a finite map keyed by consecutive integers between @math{0} and @math{n-1},
+@math{n} being the length of the vector.  Being functional, the structure is not observably mutable,
+and so access to any version will always give the correct answer.
+
+There are many possible implementations of the vector interface with different efficiency
+characteristics, the one contained prioritises ``single threaded'' use of vectors, that is, one in
+which access is most frequently to the last created version of the vector.  Access to previously
+stored versions works correctly, though it will not be quite as efficient.
+
+The original code base is the @code{fectors} project by Ian Price; it was ported first to Vicare
+Scheme by Marco Maggi; then ported to CHICKEN by Marco Maggi.
+
+The package installs the library @library{mmck fectors} along with its import library.  To require
+the library and import its syntactic bindings in a module we can do:
+
+@example
+(declare (unit my-module)
+         (emit-import-library my-module))
+
+(require-library (mmck fectors))
+
+(module (my-module)
+    ()
+  (import (scheme)
+    (mmck fectors))
+
+  ...
+
+  #| end of module |# )
+@end example
+
+@c page
+@node version
+@chapter Version functions
+
+
+@value{PACKAGE}'s version number follows the specification of @dfn{Semantic Versioning} version 2.0
+as outlined at:
+
+@center @url{https://semver.org/}
+
+@noindent
+the following functions are available to inspect the version specification at runtime.
+
+
+@defun mmck-@value{PackageStem}-package-major-version
+Return a fixnum representing the package's major version number.  As example, if the full semantic
+version is @samp{1.2.3-devel.0+x86-64}: the major version number is the fixnum @samp{1}.
+@end defun
+
+
+@defun mmck-@value{PackageStem}-package-minor-version
+Return a fixnum representing the package's minor version number.  As example, if the full semantic
+version is @samp{1.2.3-devel.0+x86-64}: the minor version number is the fixnum @samp{2}.
+@end defun
+
+
+@defun mmck-@value{PackageStem}-package-patch-level
+Return a fixnum representing the package's patch level number.  As example, if the full semantic
+version is @samp{1.2.3-devel.0+x86-64}: the patch level number is the fixnum @samp{3}.
+@end defun
+
+
+@defun mmck-@value{PackageStem}-package-prerelease-tag
+Return a string representing the package's prerelease tag.  As example, if the full semantic version
+is @samp{1.2.3-devel.0+x86-64}: the prerelease tag is the string @samp{"devel.0"}.  This string may
+be empty.
+@end defun
+
+
+@defun mmck-@value{PackageStem}-package-build-metadata
+Return a string representing the package's build metadata.  As example, if the full semantic version
+is @samp{1.2.3-devel.0+x86-64}: the build metadata is the string @samp{"x86-64"}.  This string may
+be empty.  We need to remember that this specification segment must contain only @ascii{}
+alphanumerics and hyphen @samp{[0-9A-Za-z-]}; underscores are @strong{not} allowed.
+@end defun
+
+
+@defun mmck-@value{PackageStem}-package-version
+Return a string representing the package's version.  As example, if the full semantic version is
+@samp{1.2.3-devel.0+x86-64}: the package version is the string @samp{"1.2.3-devel.0"}, without the
+build metadata.
+@end defun
+
+
+@defun mmck-@value{PackageStem}-package-semantic-version
+Return a string representing the package's semantic version.  As example, if the full semantic
+version is @samp{1.2.3-devel.0+x86-64}: the package version is the string
+@samp{"v1.2.3-devel.0+x86-64"}, notice the leading character @samp{v}.
+@end defun
+
+@c page
+@node fectors
+@chapter Functional vectors
+
+
+@cindex Library @library{mmck fectors}
+@cindex @library{mmck fectors}, library
+
+
+The following syntactic bindings are exported by the library @library{mmck fectors}.
+
+
+@defun make-fector @var{size}
+@defunx make-fector @var{size} @var{fill}
+Return a fector of the specified @var{size}, which must be a non--negative integer.  If the
+@var{fill} parameter is given, the locations of the fector are initialised to that object, otherwise
+their initial values are unspecified.
+@end defun
+
+
+@defun fector @var{obj} @dots{}
+Return a fector whose initial values are given as arguments.
+@end defun
+
+
+@defun fector? @var{obj}
+Return @true{} if a given object is a fector, @false{} otherwise.
+@end defun
+
+
+@defun fector-length @var{fector}
+Return a non--negative integer representing the number of items that are stored in @var{fector}.
+@end defun
+
+
+@defun build-fector @var{size} @var{index->obj}
+Return a new fector of the given @var{size}, a non--negative integer, where each item is initialised
+to the value of the given function @var{index->obj} applied to its index.
+@end defun
+
+
+@defun fector-ref @var{fector} @var{index}
+Return the item associated with the given @var{index} in @var{fector}.  If @var{index} is outside
+the range:
+
+@example
+0 <= @var{index} < (fector-length @var{fector})
+@end example
+
+@noindent
+then an error is raised.
+@end defun
+
+
+@defun fector-set @var{fector} @var{index} @var{item}
+Return a new fector equivalent to @var{fector} except the given @var{index} which is associated to
+@var{item}.  If @var{index} is outside the range:
+
+@example
+0 <= @var{index} < (fector-length @var{fector})
+@end example
+
+@noindent
+then an @condition{assertion} is raised.
+@end defun
+
+
+@defun list->fector @var{list-of-items}
+Return a fector initialised with the contents of the given list.
+@end defun
+
+
+@defun fector->list @var{fector}
+Return a list containing the items in @var{fector}.
+@end defun
+
+@c page
+@node Package License
+@appendix Package License
+
+
+Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}
+Copyright @copyright{} 2012 Ian Price @email{ianprice90@@googlemail.com}
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted
+provided that the following conditions are met:
+
+@enumerate
+@item
+Redistributions of source code must retain the above copyright notice, this list of conditions and
+the following disclaimer.
+
+@item
+Redistributions in binary form must reproduce the above copyright anotice, this list of conditions
+and the following disclaimer in the documentation and/or other materials provided with the
+distribution.
+
+@item
+The name of the author may not be used to endorse or promote products derived from this software
+without specific prior written permission.
+@end enumerate
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+@c page
+@c ------------------------------------------------------------
+@c Appendices.
+@c ------------------------------------------------------------
+
+@include fdl-1.3.texi
+
+@c page
+@node references
+@appendix Bibliography and references
+
+
+The documentation of @value{PACKAGE} is available online:
+
+@center @value{DocumentationUrl}
+
+@noindent
+the latest release of this package can be downloaded from:
+
+@center @value{DownloadUrl}
+
+@noindent
+development takes place at:
+
+@center @value{GithubUrl}
+
+@noindent
+and as backup at:
+
+@center @value{BitbucketUrl}
+
+@noindent
+@chicken{} can be downloaded from:
+
+@center @url{http://www.call-cc.org/}
+
+@noindent
+the package @mmck{} Checks is available from:
+
+@center @url{https://github.com/marcomaggi/mmck-checks/}
+
+@noindent
+the original implementation of @samp{fectors} is at:
+
+@center @url{https://github.com/ijp/fectors}
+
+@c page
+@node concept index
+@appendix An entry for each concept
+
+@printindex cp
+
+@node function index
+@appendix An entry for each function.
+
+@printindex fn
+
+@node variable index
+@appendix An entry for each variable.
+
+@printindex vr
+
+@node type index
+@appendix An entry for each type.
+
+@printindex tp
+
+@contents
+@bye
+
+@c end of file
+@c Local Variables:
+@c ispell-local-dictionary: "en_GB-ise-w_accents"
+@c End:

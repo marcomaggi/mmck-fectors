@@ -1,0 +1,29 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
+bindir=@bindir@
+datarootdir=@datarootdir@
+datadir=@datadir@
+docdir=${prefix}/doc
+includedir=@includedir@
+infodir=@infodir@
+htmldir=${docdir}
+libdir=@libdir@
+libexecdir=@libexecdir@
+localstatedir=@localstatedir@
+mandir=@mandir@
+sbindir=@sbindir@
+sharedstatedir=@sharedstatedir@
+sysconfdir=@sysconfdir@
+
+## ------------------------------------------------------------
+
+Name: @PACKAGE_NAME@
+Description: template library for CHICKEN
+Version: @MMUX_PKG_CONFIG_VERSION@
+#Requires: ccexceptions >= 0.8.0, ccmemory >= 0.2.1, ccstructs >= 0.2.0
+
+### end of file
+# Local Variables:
+# mode: script
+# End:
