@@ -2,7 +2,7 @@
 #
 
 AC_PREREQ([2.69])
-MMUX_PKG_VERSIONS([0],[5],[0],[devel.1])
+MMUX_PKG_VERSIONS([0],[5],[0],[devel.2])
 AC_INIT([MMCK Fectors],[MMUX_PACKAGE_VERSION],
   [marco.maggi-ipsu@poste.it],
   [mmck-fectors],[http://github.com/marcomaggi/mmck-fectors])
