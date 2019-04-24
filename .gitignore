@@ -1,5 +1,3 @@
-compiled/*
-private/compiled/*
 *~
 =*
 ,,*
@@ -47,4 +45,5 @@ m4/
 autotools/
 compiled/
 meta/autotools/
-
+*.import.scm
+*.c
