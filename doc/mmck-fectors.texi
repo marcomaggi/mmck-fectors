@@ -92,7 +92,7 @@ and as backup at:
 @center @value{BitbucketUrl}
 
 @noindent
-Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}
+Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}@*
 Copyright @copyright{} 2012 Ian Price @email{ianprice90@@googlemail.com}
 
 @quotation
@@ -358,7 +358,7 @@ the comparison use the function @var{item=}, which defaults to @func{eqv?}.
 @appendix Package License
 
 
-Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}
+Copyright @copyright{} @value{COPYRIGHT_YEARS} by @value{AUTHOR} @value{AUTHOR_EMAIL}@*
 Copyright @copyright{} 2012 Ian Price @email{ianprice90@@googlemail.com}
 All rights reserved.
 
