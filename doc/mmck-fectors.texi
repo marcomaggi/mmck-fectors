@@ -72,10 +72,9 @@ This document describes version @value{VERSION} of @value{PACKAGE}, a @chicken{}
 implementing functional vectors.  @chicken{} is a Scheme--to--C compiler supporting the language
 features as defined in the ``Revised^5 Report on Scheme''.
 
-The library supports @posix{} platforms.  This package has been tested with @chicken{} version
-@value{CHICKEN_VERSION}.
-
-This package is distributed under the terms of the @gnu{} Lesser General Public License (@lgpl{}).
+The package supports @posix{} platforms.  This package should work with @chicken{} version 5+; it
+has been tested with @chicken{} version @value{CHICKEN_VERSION}.  The code depends on the @chicken{}
+egg @code{coops}.  To run the tests: this package depends upon the package @mmck{} Checks.
 
 The latest release can be downloaded from:
 
