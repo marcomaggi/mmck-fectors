@@ -6,7 +6,7 @@
 ;;;
 ;;;Abstract
 ;;;
-;;;	This unit defines the module ALPHA.
+;;;	This unit is the core module.
 ;;;
 ;;;Author: Ian Price <ianprice90@googlemail.com>
 ;;;Ported to CHICKEN by: Marco Maggi <mrc.mgg@gmail.com>
@@ -84,8 +84,8 @@
 (declare (unit mmck.fectors.core)
 	 (emit-import-library mmck.fectors.core))
 
-(require-extension coops)
-(require-extension coops-primitive-objects)
+(require-library (coops)
+		 (coops-primitive-objects))
 
 (module (mmck.fectors.core)
     (make-fector

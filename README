@@ -44,8 +44,9 @@ Checks.
   The package uses the GNU Autotools  and it is tested, using Travis CI,
 on both Ubuntu  GNU+Linux systems and OS X systems.
 
-  The last time the maintainer bothered to update this paragraph: he had
-tested CHICKEN 5.0.0.
+  This package  should work with CHICKEN  version 5+; the last  time the
+maintainer  bothered to  update this  paragraph: he  had tested  CHICKEN
+5.1.0.
 
 
 2. License
@@ -143,7 +144,9 @@ hand options to the compiler:
 
   Shared libraries will be installed under:
 
-			  ${libdir}/chicken/9
+		       ${libdir}/chicken/$VERSION
+
+where $VERSION is the version number of the installed CHICKEN.
 
 
 4. Usage

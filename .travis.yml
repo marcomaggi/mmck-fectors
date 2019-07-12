@@ -1,6 +1,6 @@
 # .travis.yml --
 #
-# Travis CI configuration for MMCK Fectors.
+# Travis CI configuration for MMCK Template.
 
 #page
 #### about branch selection
@@ -118,7 +118,7 @@ git:
 # It is possible to select which branches to process.
 #
 # branches:
-p#   only:
+#   only:
 #     - master
 
 # NOTE  There  must  be only  *one*  env.global  key!!!   Otherwise  the earlier  settings  will  be
@@ -172,7 +172,10 @@ matrix:
           packages:
           - gcc-8
       script: |
-        export CHICKEN_REPOSITORY_PATH=$(csi -R chicken.platform -p '(car (repository-path))');
+        export CHICKEN_VERSION=$(csi -release);
+        export libdir=$(if test -d /lib64 ; then echo /usr/local/lib64 ; else echo /usr/local/lib ; fi);
+        export CHICKEN_REPOSITORY_PATH=$libdir/chicken/$CHICKEN_VERSION$(csi -R chicken.platform -e '(map (lambda (P) (display ":")(display P)) (repository-path))(newline)');
+        echo CHICKEN_REPOSITORY_PATH=$CHICKEN_REPOSITORY_PATH
         ./configure --enable-maintainer-mode;
         make all;
         make check;
@@ -184,7 +187,10 @@ matrix:
       osx_image: xcode10.1
       compiler: clang
       script: |
-        export CHICKEN_REPOSITORY_PATH=$(csi -R chicken.platform -p '(car (repository-path))');
+        export CHICKEN_VERSION=$(csi -release);
+        export libdir=$(if test -d /lib64 ; then echo /usr/local/lib64 ; else echo /usr/local/lib ; fi);
+        export CHICKEN_REPOSITORY_PATH=$libdir/chicken/$CHICKEN_VERSION$(csi -R chicken.platform -e '(map (lambda (P) (display ":")(display P)) (repository-path))(newline)');
+        echo CHICKEN_REPOSITORY_PATH=$CHICKEN_REPOSITORY_PATH
         ./configure --enable-maintainer-mode;
         make all;
         make check;
