@@ -8,7 +8,7 @@
 ;;;
 ;;;	This program is a test of fectors' features.
 ;;;
-;;;Copyright (C) 2012, 2019 Marco Maggi <marco.maggi-ipsu@poste.it>
+;;;Copyright (C) 2012, 2019 Marco Maggi <mrc.mgg@gmail.com>
 ;;;Copyright (C) 2012 Ian Price <ianprice90@googlemail.com>
 ;;;All rights reserved.
 ;;;

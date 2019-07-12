@@ -9,9 +9,9 @@
 ;;;	This unit defines the module ALPHA.
 ;;;
 ;;;Author: Ian Price <ianprice90@googlemail.com>
-;;;Ported to CHICKEN by: Marco Maggi <marco.maggi-ipsu@poste.it>
+;;;Ported to CHICKEN by: Marco Maggi <mrc.mgg@gmail.com>
 ;;;
-;;;Copyright (C) 2019 Marco Maggi <marco.maggi-ipsu@poste.it>
+;;;Copyright (C) 2019 Marco Maggi <mrc.mgg@gmail.com>
 ;;;Copyright (C) 2012 Ian Price <ianprice90@googlemail.com>
 ;;;All rights reserved.
 ;;;

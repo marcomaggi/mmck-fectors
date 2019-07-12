@@ -12,7 +12,7 @@
 ;;;	exporting  public syntactic  bindings  and it  reexports  all such  syntactic
 ;;;	bindings.
 ;;;
-;;;Copyright (C) 2019 Marco Maggi <marco.maggi-ipsu@poste.it>
+;;;Copyright (C) 2019 Marco Maggi <mrc.mgg@gmail.com>
 ;;;Copyright (C) 2012 Ian Price <ianprice90@googlemail.com>
 ;;;All rights reserved.
 ;;;

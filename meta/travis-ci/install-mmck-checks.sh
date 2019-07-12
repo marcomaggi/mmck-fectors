@@ -8,7 +8,7 @@
 
 PROGNAME=${0##*/}
 PACKAGE_NAME=mmck-checks
-REQUIRED_PACKAGE_VERSION=0.2.0-devel.2
+REQUIRED_PACKAGE_VERSION=0.3.0-devel.0
 STEM=${PACKAGE_NAME}-${REQUIRED_PACKAGE_VERSION}
 VERSION_EXECUTABLE=$PACKAGE_NAME
 ARCHIVE=${STEM}.tar.gz
@@ -21,7 +21,9 @@ if test -d /lib64
 then libdir=${prefix}/lib64
 else libdir=${prefix}/lib
 fi
-export CHICKEN_REPOSITORY_PATH=${libdir}/chicken/9
+
+#CHICKEN_VERSION=$(csi -release)
+export CHICKEN_REPOSITORY_PATH=$(csi -R chicken.platform -e '(map (lambda (P) (display P)(display ":")) (repository-path))(newline)')
 
 function main () {
     script_verbose 'wget "%s" --no-check-certificate -O "%s"' "$SOURCE_URI" "$LOCAL_ARCHIVE"
@@ -44,7 +46,7 @@ function main () {
     fi
 
     script_verbose './configure --prefix="%s" --enable-maintainer-mode' "$prefix"
-    if ! ./configure --prefix="$prefix" --enable-maintainer-mode
+    if ! ./configure --prefix="$prefix" --libdir="$libdir" --enable-maintainer-mode
     then script_error 'error configuring %s' "$STEM"
     fi
 

@@ -33,7 +33,7 @@ tested CHICKEN 5.0.0.
 
 ## License
 
-Copyright (c) 2012, 2019 Marco Maggi `marco.maggi-ipsu@poste.it`<br/>
+Copyright (c) 2012, 2019 Marco Maggi `mrc.mgg@gmail.com`<br/>
 Copyright (c) 2012 Ian Price `ianprice90@googlemail.com`<br/>
 All rights reserved.
 

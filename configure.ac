@@ -4,11 +4,11 @@
 AC_PREREQ([2.69])
 MMUX_PKG_VERSIONS([0],[5],[0],[devel.2])
 AC_INIT([MMCK Fectors],[MMUX_PACKAGE_VERSION],
-  [marco.maggi-ipsu@poste.it],
+  [mrc.mgg@gmail.com],
   [mmck-fectors],[http://github.com/marcomaggi/mmck-fectors])
 MMUX_INIT
 AC_REVISION([0.1])
-AC_COPYRIGHT([Copyright (c) 2019 Marco Maggi <marco.maggi-ipsu@poste.it>
+AC_COPYRIGHT([Copyright (c) 2019 Marco Maggi <mrc.mgg@gmail.com>
 Copyright (C) 2012 Ian Price <ianprice90@googlemail.com>
 All rights reserved.
 
